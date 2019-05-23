@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-6 col-sm-10 offset-md-3 offset-sm-1 card">
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" name="un" [(ngModel)]="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" name="pw" [(ngModel)]="password">
+                </div>
+                <div class="form-group" *ngIf="!login">
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="cn"
+                        [(ngModel)]="confirm">
+                </div>
+                <div class="form-group" *ngIf="login">
+                    <a (click)="newUser()" class="btn btn-default">New User?</a>
+                </div>
+                <div class="form-group" *ngIf="!login">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" accept="image/*"
+                            (change)="newFile($event)">
+                        <label class="custom-file-label"
+                            for="customFile">{{profile.length === 0 ? 'Choose a square image for your profile' : filename}}</label>
+                    </div>
+                </div>
+                <div class="col img-disp" *ngIf="profile.length">
+                    <img [src]="profile" alt="" class="img-fluid">
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="retry">
+                    Incorrect credentials!
+                </div>
+                <button class="btn btn-success" [disabled]="isDisabled()" (click)="submit()">
+                    {{login?'Login':'Signup'}}
+                </button>
+                <button class="btn btn-danger float-right" (click)="clear()">
+                    Clear
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

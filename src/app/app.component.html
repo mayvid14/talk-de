@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<nav class="navbar fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img [src]="user ? user.profile : 'assets/images/talk.png'" width="30" height="30" class="d-inline-block align-top avatar" alt="">
+        {{user ? user.username : 'Talk'}}
+    </a>
+    <span class="col"></span>
+    <a class="btn nav-link text-light" (click)="minimize()">&ndash;</a>
+    <a class="btn nav-link text-light" (click)="maximize()">&#9723;</a>
+    <a class="btn nav-link text-light" (click)="close()">&times;</a>
+</nav>
+<div class="container clear-bar">
+    <router-outlet></router-outlet>
+</div>
