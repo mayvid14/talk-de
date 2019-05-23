@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TalkService } from '../../providers/talk.service';
 import { Router } from '@angular/router';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
 	selector: 'app-login',
@@ -12,18 +13,18 @@ export class LoginComponent implements OnInit {
 	username = '';
 	password = '';
 	confirm = '';
-	profile: string | ArrayBuffer = '';
-	filename = '';
+	profile: File;
+	imgSrc: string|ArrayBuffer = '';
 	reader: FileReader;
+	filename = '';
 	retry = false;
 
-	constructor(private service: TalkService, private router: Router) { }
+	constructor(private service: TalkService, private router: Router, private socket: Socket) { }
 
 	ngOnInit() {
 		this.reader = new FileReader();
 		this.reader.onloadend = () => {
-			this.profile = this.reader.result;
-			console.log(this.profile);
+			this.imgSrc = this.reader.result;
 		};
 	}
 
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
 	newFile(event: any): void {
 		const file: File = event.target.files.item(0);
 		this.reader.readAsDataURL(file);
+		this.profile = file;
 		this.filename = file.name;
 	}
 
@@ -41,7 +43,7 @@ export class LoginComponent implements OnInit {
 		this.username = '';
 		this.password = '';
 		this.confirm = '';
-		this.profile = '';
+		this.profile = null;
 	}
 
 	isDisabled(): boolean {
@@ -52,13 +54,14 @@ export class LoginComponent implements OnInit {
 			this.password.trim().length > 0 &&
 			this.confirm.trim().length > 0 &&
 			this.password === this.confirm &&
-			this.profile.toString().length);
+			this.profile);
 	}
 
 	submit(): void {
 		if (this.login) {
 			this.service.login(this.username, this.password).subscribe(res => {
 				this.service.user.next(res);
+				this.socket.emit('new user', res);
 				this.router.navigate(['home']);
 			}, error => {
 				this.retry = true;
@@ -66,6 +69,7 @@ export class LoginComponent implements OnInit {
 		} else {
 			this.service.signup(this.username, this.password, this.profile).subscribe(res => {
 				this.service.user.next(res);
+				this.socket.emit('new user', res);
 				this.router.navigate(['home']);
 			}, error => {
 				this.retry = true;

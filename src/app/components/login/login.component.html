@@ -20,14 +20,17 @@
                         <input type="file" class="custom-file-input" id="customFile" accept="image/*"
                             (change)="newFile($event)">
                         <label class="custom-file-label"
-                            for="customFile">{{profile.length === 0 ? 'Choose a square image for your profile' : filename}}</label>
+                            for="customFile">{{filename.length<1 ? 'Choose a square image for your profile' : filename}}</label>
                     </div>
                 </div>
-                <div class="col img-disp" *ngIf="profile.length">
-                    <img [src]="profile" alt="" class="img-fluid">
+                <div class="col img-disp" *ngIf="profile!=null">
+                    <img [src]="imgSrc" alt="" class="img-fluid">
                 </div>
-                <div class="alert alert-danger" role="alert" *ngIf="retry">
+                <div class="alert alert-danger" role="alert" *ngIf="login && retry">
                     Incorrect credentials!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="!login && retry">
+                    Something went wrong!
                 </div>
                 <button class="btn btn-success" [disabled]="isDisabled()" (click)="submit()">
                     {{login?'Login':'Signup'}}
