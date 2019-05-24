@@ -13,6 +13,7 @@ import { Message } from '../models/message';
 export class TalkService {
 	private url = 'http://localhost:2810';
 	user: Subject<User> = new BehaviorSubject<User>(null);
+	userProfileCache = {};
 
 	constructor(private http: HttpClient, private socket: Socket) { }
 
@@ -47,5 +48,13 @@ export class TalkService {
 			};
 			this.socket.emit('new message', message);
 		}, console.error);
+	}
+
+	addUrl(id: string, url: string | ArrayBuffer): void {
+		this.userProfileCache[id] = url;
+	}
+
+	getUrl(id: string): string | ArrayBuffer {
+		return this.userProfileCache[id];
 	}
 }

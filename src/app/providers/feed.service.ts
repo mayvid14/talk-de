@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Message } from '../models/message';
+import { User } from '../models/user';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class FeedService {
-	imgCache = {};
+	activeMembers: Array<User> = [];
 	feed: Array<Message> = [];
 
-	constructor(private socket: Socket) { }
-
-	init(): void {
-		this.socket.fromEvent<Message>('message').subscribe(message => {
+	constructor(private socket: Socket) {
+		this.socket.fromEvent<Message>('new message').subscribe(message => {
+			console.log(message);
 			this.feed.push(message);
 		});
+	}
+
+	getMessages(): Observable<Array<Message>> {
+		return of(this.feed);
+	}
+
+	getMembers(): Observable<Array<User>> {
+		return of(this.activeMembers);
 	}
 }

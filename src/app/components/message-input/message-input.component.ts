@@ -22,7 +22,7 @@ export class MessageInputComponent implements OnInit {
 	}
 
 	submit(): void {
-		this.service.sendMessage(this.txt);
+		this.service.sendMessage(this.txt.slice(0,-1));
 		this.txt = '';
 	}
 

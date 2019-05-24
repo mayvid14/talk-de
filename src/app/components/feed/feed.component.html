@@ -1,9 +1,13 @@
 <div class="feed">
-  <div *ngFor="let el of arr;index as i" [ngClass]="el%2==0?'b-d-1 row no-gutters':'row no-gutters'">
-    <img src="assets/images/talk.png" alt="" class="avatar">
+  <div *ngFor="let msg of messages | async;index as i" class="row no-gutters">
+    <img [src]="msg.sentBy.profileUrl || getImage(msg.sentBy)" alt="" class="avatar mx-1"
+      *ngIf="!isRecent(msg.sentBy._id)">
     <div class="col-11">
-      <span class="h6 mx-1">{{i}} <small class="text-muted">{{el}}</small></span>
-      <p class="mx-2">Gibberish!</p>
+      <span class="h6 mx-1">{{msg.sentBy.username}} <small
+          class="text-muted">{{moment(msg.sentAt).fromNow()}}</small></span>
+      <p class="mx-2">{{msg.content}}</p>
     </div>
   </div>
 </div>
+
+<!--  [ngClass]="msg._id%2==0?'b-d-1 row no-gutters':'row no-gutters'" -->
