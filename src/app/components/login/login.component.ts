@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TalkService } from '../../providers/talk.service';
 import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
+import { User } from '../../models/user';
 
 @Component({
 	selector: 'app-login',
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
 	submit(): void {
 		if (this.login) {
 			this.service.login(this.username, this.password).subscribe(res => {
-				this.service.user.next(res);
+				this.service.user.next(res as User);
 				this.socket.emit('new user', res);
 				this.router.navigate(['home']);
 			}, error => {
@@ -68,7 +69,7 @@ export class LoginComponent implements OnInit {
 			});
 		} else {
 			this.service.signup(this.username, this.password, this.profile).subscribe(res => {
-				this.service.user.next(res);
+				this.service.user.next(res as User);
 				this.socket.emit('new user', res);
 				this.router.navigate(['home']);
 			}, error => {

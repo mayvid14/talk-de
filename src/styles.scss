@@ -2,8 +2,6 @@
 html, body {
   margin: 0;
   padding: 0;
-
-  height: 80%;
 }
 button, a {
   -webkit-app-region: no-drag;
@@ -11,4 +9,17 @@ button, a {
 
 .clear-bar{
   margin-top: 3.65em;
+}
+
+.avatar{
+  max-width: 30px;
+  max-height: 30px;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.full-height{
+  height: 100%;
 }

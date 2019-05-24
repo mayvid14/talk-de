@@ -1,0 +1,9 @@
+<div class="feed">
+  <div *ngFor="let el of arr;index as i" [ngClass]="el%2==0?'b-d-1 row no-gutters':'row no-gutters'">
+    <img src="assets/images/talk.png" alt="" class="avatar">
+    <div class="col-11">
+      <span class="h6 mx-1">{{i}} <small class="text-muted">{{el}}</small></span>
+      <p class="mx-2">Gibberish!</p>
+    </div>
+  </div>
+</div>

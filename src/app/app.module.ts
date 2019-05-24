@@ -20,6 +20,9 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { ActiveMembersComponent } from './components/active-members/active-members.component';
+import { MessageInputComponent } from './components/message-input/message-input.component';
+import { FeedComponent } from './components/feed/feed.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:2810', options: {} };
 // AoT requires an exported function for factories
@@ -32,7 +35,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 		AppComponent,
 		HomeComponent,
 		WebviewDirective,
-		LoginComponent
+		LoginComponent,
+		ActiveMembersComponent,
+		MessageInputComponent,
+		FeedComponent
 	],
 	imports: [
 		BrowserModule,

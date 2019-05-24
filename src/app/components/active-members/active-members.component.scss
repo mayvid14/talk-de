@@ -1,0 +1,20 @@
+.card{
+    margin: 0;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1020;
+    max-width: 25%;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+.o-scroll{
+    overflow-y: scroll;
+}

@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 			console.log(this.arr);
 		});
 		this.service.user.subscribe(val => {
-			this.user = val;
+			this.user = val as User;
 			this.getUserImage();
 		});
 	}

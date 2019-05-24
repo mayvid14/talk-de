@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.service.user.subscribe(user => {
-			this.user = user;
+			this.user = user as User;
 		});
 	}
 
