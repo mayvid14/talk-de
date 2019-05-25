@@ -21,20 +21,16 @@ export class TalkService {
 		return this.http.post<User>(`${this.url}/login`, { username, password });
 	}
 
-	signup(username: string, password: string, profile: File): Observable<User> {
-		const formData = new FormData();
-		formData.append('username', username);
-		formData.append('password', password);
-		formData.append('profile', profile);
-		return this.http.post<User>(`${this.url}/signup`, formData);
+	signup(username: string, password: string, profile: string | ArrayBuffer): Observable<User> {
+		return this.http.post<User>(`${this.url}/signup`, { username, password, profile });
 	}
 
-	getImage(path: string): Observable<any> {
-		const epath = encodeURI(path);
-		return this.http.get(`${this.url}/image/${epath}`, { responseType: 'blob' as 'json' });
-	}
+	// getImage(path: string): Observable<any> {
+	// 	const epath = encodeURI(path);
+	// 	return this.http.get(`${this.url}/image/${epath}`, { responseType: 'blob' as 'json' });
+	// }
 
-	sendMessage(msg: string): void {
+	sendMessage(msg: string, attachment?: string|ArrayBuffer, filename?: string): void {
 		this.user.subscribe(user => {
 			const message: Message = {
 				sentBy: {
@@ -44,8 +40,9 @@ export class TalkService {
 					_id: user._id
 				},
 				sentAt: moment(),
-				content: msg
+				content: msg || filename
 			};
+			if (attachment) message['attachment'] = attachment;
 			this.socket.emit('new message', message);
 		}, console.error);
 	}
@@ -56,5 +53,9 @@ export class TalkService {
 
 	getUrl(id: string): string | ArrayBuffer {
 		return this.userProfileCache[id];
+	}
+
+	populateFeed() : Observable<Array<Message>> {
+		return this.http.get<Array<Message>>(`${this.url}/populate`);
 	}
 }

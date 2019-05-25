@@ -7,6 +7,11 @@
   z-index: 1000;
   max-width: 75%;
   overflow-y: scroll;
+  transform: rotate(180deg);
+}
+
+.msg{
+  transform: rotate(180deg);
 }
 
 ::-webkit-scrollbar {
@@ -23,4 +28,10 @@
 .avatar{
   max-width: 40px;
   max-height: 40px;
+}
+.attachment{
+  max-width: 250px;
+  max-height: 250px;
+  width: auto;
+  height: auto;
 }

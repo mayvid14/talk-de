@@ -1,11 +1,37 @@
 <div class="bottom">
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <button class="btn btn-outline-dark" type="button">&#43;</button>
+      <button class="btn btn-outline-dark" type="button" (click)="openModal(template)">&#43;</button>
     </div>
-    <textarea type="text" class="form-control tb" placeholder="Type a message..." aria-label="" aria-describedby="basic-addon1" rows="1" name="txt" [(ngModel)]="txt" id="txt" (keyup.enter)="submit()"></textarea>
+    <textarea type="text" class="form-control tb" placeholder="Type a message..." aria-label=""
+      aria-describedby="basic-addon1" rows="1" name="txt" [(ngModel)]="txt" id="txt"
+      (keyup.enter)="submit()"></textarea>
     <div class="input-group-append">
       <button class="btn btn-outline-dark" type="button">:)</button>
     </div>
   </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Attach an Image</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Caption" name="un" [(ngModel)]="caption">
+    </div>
+    <div class="form-group">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFile" accept="image/*" (change)="newFile($event)">
+        <label class="custom-file-label" for="customFile">{{filename.length<1 ? 'Click to upload' : filename}}</label>
+      </div>
+    </div>
+    <div class="col-6 offset-3 img-disp" *ngIf="attachment">
+      <img [src]="attachment" alt="" class="img-fluid">
+    </div>
+    <button class="btn btn-outline-success" (click)="submit()" [disabled]="attachment.toString().length===0">Send</button>
+  </div>
+</ng-template>

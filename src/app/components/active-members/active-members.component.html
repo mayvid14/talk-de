@@ -5,21 +5,9 @@
   </div>
   <div class="card-body p-0 o-scroll">
     <div class="list-group">
-      <div class="list-group-item text-truncate">
-        <img src="assets/images/talk.png" alt="" class="avatar d-inline-block">
-        <span class="mx-2">First Member</span>
-      </div>
-      <div class="list-group-item text-truncate">
-        <img src="assets/images/talk.png" alt="" class="avatar d-inline-block">
-        <span class="mx-2">Second Member</span>
-      </div>
-      <div class="list-group-item text-truncate">
-        <img src="assets/images/talk.png" alt="" class="avatar d-inline-block">
-        <span class="mx-2">Third Member</span>
-      </div>
-      <div class="list-group-item text-truncate">
-        <img src="assets/images/talk.png" alt="" class="avatar d-inline-block">
-        <span class="mx-2">Fourth Member</span>
+      <div class="list-group-item text-truncate" *ngFor="let member of members.sort()">
+        <img [src]="member.profile || 'assets/images/talk.png'" alt="" class="avatar d-inline-block">
+        <span class="mx-2">{{member.username}}</span>
       </div>
     </div>
   </div>

@@ -23,8 +23,8 @@
                             for="customFile">{{filename.length<1 ? 'Choose a square image for your profile' : filename}}</label>
                     </div>
                 </div>
-                <div class="col img-disp" *ngIf="profile!=null">
-                    <img [src]="imgSrc" alt="" class="img-fluid">
+                <div class="col-6 offset-3 img-disp" *ngIf="profile!=null">
+                    <img [src]="profile" alt="" class="img-fluid">
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="login && retry">
                     Incorrect credentials!

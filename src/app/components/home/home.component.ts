@@ -10,32 +10,23 @@ import { Socket } from 'ngx-socket-io';
 })
 export class HomeComponent implements OnInit {
 	user: User;
-	fileReader: FileReader;
 	arr: Array<User> = [];
 
 	constructor(private service: TalkService, private socket: Socket) { }
 
 	ngOnInit() {
-		this.fileReader = new FileReader();
-		this.fileReader.onloadend = () => {
-			this.user.profileUrl = this.fileReader.result;
-		}
-		this.socket.fromEvent('new user').subscribe((nu: User) => {
-			this.arr.push(nu);
+		this.socket.fromEvent('new user').subscribe((nu: Array<User>) => {
+			this.arr.length = 0;
+			this.arr.push(...nu);
 			console.log(this.arr);
 		});
-		this.service.user.subscribe(val => {
-			this.user = val as User;
-			this.getUserImage();
+		this.socket.fromEvent('refresh').subscribe(() => {
+			this.socket.emit('new user', this.user);
 		});
-	}
-
-	getUserImage(): void {
-		if (!this.user.profileUrl) {
-			this.service.getImage(this.user.profile).subscribe(f => {
-				this.fileReader.readAsDataURL(f);
-			});
-		}
+		this.service.user.subscribe(val => {
+			this.user = val;
+			this.socket.emit('new user', this.user);
+		});
 	}
 
 }

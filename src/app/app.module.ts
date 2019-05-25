@@ -23,6 +23,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ActiveMembersComponent } from './components/active-members/active-members.component';
 import { MessageInputComponent } from './components/message-input/message-input.component';
 import { FeedComponent } from './components/feed/feed.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const config: SocketIoConfig = { url: 'http://localhost:2810', options: {} };
 // AoT requires an exported function for factories
@@ -52,7 +53,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 				deps: [HttpClient]
 			}
 		}),
-		SocketIoModule.forRoot(config)
+		SocketIoModule.forRoot(config),
+		ModalModule.forRoot()
 	],
 	providers: [ElectronService],
 	bootstrap: [AppComponent]
